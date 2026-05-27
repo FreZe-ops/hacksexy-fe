@@ -1,0 +1,41 @@
+.devtools-guard-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483646;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.92);
+  color: #fff;
+  font-family: system-ui, sans-serif;
+}
+
+.devtools-guard-panel {
+  max-width: 420px;
+  padding: 2rem;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  background: #111;
+}
+
+.devtools-guard-panel h1 {
+  margin: 0 0 0.75rem;
+  font-size: 1.35rem;
+}
+
+.devtools-guard-panel p {
+  margin: 0 0 1.25rem;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.5;
+}
+
+.devtools-guard-panel button {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  background: #e11d48;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}

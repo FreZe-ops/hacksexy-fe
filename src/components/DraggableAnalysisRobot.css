@@ -1,0 +1,143 @@
+/* Robot phân tích — kéo thả + bubble HUD xanh */
+
+.nh-robot-widget {
+  position: fixed;
+  z-index: 1200;
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  touch-action: none;
+  cursor: grab;
+  user-select: none;
+}
+
+.nh-robot-widget:active {
+  cursor: grabbing;
+}
+
+.nh-robot-widget__bubble-wrap {
+  width: 100%;
+  margin-bottom: 4px;
+}
+
+.nh-robot-widget__bubble {
+  position: relative;
+  box-sizing: border-box;
+  min-height: 56px;
+  padding: 14px 16px;
+  background: #003b06;
+  border: 2px solid #00ff1a;
+  box-shadow: 0 0 14px rgba(0, 255, 26, 0.38);
+}
+
+.nh-robot-widget__corner {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #00ff1a;
+  box-shadow: 0 0 8px rgba(0, 255, 26, 0.45);
+  pointer-events: none;
+}
+
+.nh-robot-widget__corner--tl {
+  top: -2px;
+  left: -2px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.nh-robot-widget__corner--br {
+  right: -2px;
+  bottom: -2px;
+  border-left: none;
+  border-top: none;
+}
+
+.nh-robot-widget__text {
+  margin: 0;
+  color: #fff;
+  font-family: "Roboto", "Segoe UI", system-ui, sans-serif;
+  font-size: clamp(13px, 2.4vw, 15px);
+  font-weight: 700;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.nh-robot-widget__tail {
+  position: relative;
+  width: 18px;
+  height: 12px;
+  margin: -1px auto 0;
+}
+
+.nh-robot-widget__tail::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 12px solid #00ff1a;
+}
+
+.nh-robot-widget__tail-fill {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 10px solid #003b06;
+}
+
+.nh-robot-widget__img {
+  display: block;
+  width: min(240px, 100%);
+  height: auto;
+  max-height: 220px;
+  object-fit: contain;
+  pointer-events: none;
+  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.45));
+}
+
+.nh-robot-widget--embedded {
+  position: absolute;
+  z-index: 3;
+  width: min(300px, 42vw);
+  cursor: grab;
+  touch-action: none;
+}
+
+.nh-robot-widget--embedded:active {
+  cursor: grabbing;
+}
+
+.nh-robot-widget__top-slot {
+  width: 100%;
+  margin-bottom: 4px;
+}
+
+@media (max-width: 640px) {
+  .nh-robot-widget {
+    width: min(260px, calc(100vw - 24px));
+  }
+
+  .nh-robot-widget__img {
+    max-height: 180px;
+  }
+
+  .nh-robot-widget--embedded {
+    width: calc(100% - 12px);
+    max-width: calc(100% - 12px);
+  }
+
+  .nh-robot-widget__top-slot {
+    width: 100%;
+    max-width: 100%;
+  }
+}

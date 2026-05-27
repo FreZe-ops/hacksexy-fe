@@ -1,0 +1,135 @@
+.admin-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 64px;
+  padding: 10px max(20px, env(safe-area-inset-right, 0px)) 10px
+    max(20px, env(safe-area-inset-left, 0px));
+  background: rgba(255, 255, 255, 0.92);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-sizing: border-box;
+}
+
+.admin-topbar__left,
+.admin-topbar__right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.admin-topbar__home {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  background: #fff;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.admin-topbar__home:hover {
+  color: #4f46e5;
+  border-color: rgba(79, 70, 229, 0.22);
+  background: #f8f7ff;
+}
+
+.admin-topbar__user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px 6px 6px;
+  border-radius: 999px;
+  background: #f8fafc;
+  border: 1px solid rgba(15, 23, 42, 0.06);
+}
+
+.admin-topbar__avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.admin-topbar__meta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.admin-topbar__name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.2;
+}
+
+.admin-topbar__role {
+  font-size: 11px;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.admin-topbar__logout {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 16px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: filter 0.2s ease, transform 0.15s ease;
+}
+
+.admin-topbar__logout:hover {
+  filter: brightness(1.05);
+}
+
+.admin-topbar__logout:active {
+  transform: translateY(1px);
+}
+
+@media (max-width: 640px) {
+  .admin-topbar {
+    flex-wrap: wrap;
+    min-height: auto;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  .admin-topbar__right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .admin-topbar__home span {
+    display: none;
+  }
+
+  .admin-topbar__logout span {
+    display: none;
+  }
+}

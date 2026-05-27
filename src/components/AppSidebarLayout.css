@@ -1,0 +1,65 @@
+/* Layout shell — navbar cố định trái, chỉ content phải scroll */
+
+.x88-hub {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  max-height: 100dvh;
+  box-sizing: border-box;
+  overflow: hidden;
+  color: #fff;
+  font-family: "Kanit-Regular", "Segoe UI", system-ui, sans-serif;
+}
+
+.x88-hub__body {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  container-type: inline-size;
+  container-name: hub-body;
+}
+
+/* Feeds — live né navbar 340px, terminal góc phải */
+.x88-hub .hacker-feed--left {
+  left: calc(340px + max(12px, env(safe-area-inset-left, 0px)));
+}
+
+.x88-hub .hacker-feed--right {
+  right: max(12px, env(safe-area-inset-right, 0px));
+}
+
+@media (max-width: 640px) {
+  .x88-hub {
+    flex-direction: column;
+    height: 100dvh;
+    max-height: 100dvh;
+    overflow: hidden;
+  }
+
+  .x88-hub__body {
+    flex: 1;
+    min-height: 0;
+    height: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    container-type: inline-size;
+    container-name: hub-body;
+    padding-bottom: calc(168px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .x88-hub .hacker-feed--left {
+    left: max(12px, env(safe-area-inset-left, 0px));
+  }
+}

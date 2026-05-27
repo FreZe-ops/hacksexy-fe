@@ -1,0 +1,96 @@
+.nh-robot-hack-loading {
+  width: min(320px, 92vw);
+  min-height: 118px;
+  margin: 0 auto 6px;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+  box-sizing: border-box;
+  filter: drop-shadow(0 0 14px rgba(0, 255, 26, 0.28));
+  animation: nh-robot-hack-loading-in 0.22s ease-out;
+}
+
+@keyframes nh-robot-hack-loading-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.nh-robot-hack-loading__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  padding: 24px 14px 16px;
+  box-sizing: border-box;
+}
+
+.nh-robot-hack-loading__title {
+  text-align: center;
+  color: #f7ff00;
+  font-family: "Source Code Pro", ui-monospace, monospace;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  line-height: 1.25;
+  text-shadow: 0 0 10px rgba(247, 255, 0, 0.35);
+}
+
+.nh-robot-hack-loading__bar-track {
+  position: relative;
+  width: 100%;
+  height: 16px;
+  border: 1px solid rgba(0, 255, 225, 0.65);
+  background: rgba(0, 0, 0, 0.45);
+  box-shadow:
+    0 0 12px rgba(0, 255, 225, 0.2),
+    inset 0 0 8px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+}
+
+.nh-robot-hack-loading__bar-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: #00ff55;
+  box-shadow: 0 0 14px rgba(0, 255, 85, 0.55);
+  transition: width 0.12s linear;
+}
+
+.nh-robot-hack-loading__status {
+  text-align: center;
+  color: #ffffff;
+  font-family: "Source Code Pro", ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 640px) {
+  .nh-robot-hack-loading {
+    width: 100%;
+    max-width: 100%;
+    min-height: 108px;
+  }
+
+  .nh-robot-hack-loading__inner {
+    padding: 20px 10px 14px;
+    gap: 8px;
+  }
+
+  .nh-robot-hack-loading__title {
+    font-size: 11px;
+  }
+
+  .nh-robot-hack-loading__status {
+    font-size: 10px;
+  }
+}

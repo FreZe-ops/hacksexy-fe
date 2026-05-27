@@ -1,0 +1,130 @@
+.nh-robot-hack-results {
+  width: min(268px, 84vw);
+  min-height: 400px;
+  margin: 0 auto 6px;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+  box-sizing: border-box;
+  filter: drop-shadow(0 0 14px rgba(0, 255, 26, 0.28));
+  animation: nh-robot-hack-results-in 0.22s ease-out;
+}
+
+@keyframes nh-robot-hack-results-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.nh-robot-hack-results__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+  padding: 28px 12px 20px;
+  min-height: 100%;
+  box-sizing: border-box;
+}
+
+.nh-robot-hack-results__title {
+  text-align: center;
+  color: #f7ff00;
+  font-family: "Source Code Pro", ui-monospace, monospace;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  line-height: 1.25;
+  text-shadow: 0 0 10px rgba(247, 255, 0, 0.35);
+}
+
+.nh-robot-hack-results__grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.nh-robot-hack-results__box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-height: 62px;
+  padding: 10px 8px;
+  border: 1px solid rgba(0, 255, 26, 0.85);
+  background: rgba(0, 0, 0, 0.28);
+  box-shadow:
+    0 0 10px rgba(0, 255, 26, 0.12),
+    inset 0 0 12px rgba(0, 255, 26, 0.04);
+  text-align: center;
+}
+
+.nh-robot-hack-results__label {
+  color: #f7ff00;
+  font-family: "Roboto", "Segoe UI", sans-serif;
+  font-size: 15px;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  line-height: 1.15;
+}
+
+.nh-robot-hack-results__value {
+  color: #ffffff;
+  font-family: "Roboto", "Segoe UI", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.nh-robot-hack-results__countdown {
+  color: #00ff55;
+  font-family: "Source Code Pro", ui-monospace, monospace;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  text-shadow: 0 0 14px rgba(0, 255, 85, 0.55);
+}
+
+@media (max-width: 640px) {
+  .nh-robot-hack-results {
+    width: 100%;
+    max-width: 100%;
+    min-height: 360px;
+    margin: 0 auto 4px;
+  }
+
+  .nh-robot-hack-results__inner {
+    padding: 24px 10px 16px;
+    gap: 10px;
+  }
+
+  .nh-robot-hack-results__title {
+    font-size: 14px;
+  }
+
+  .nh-robot-hack-results__box {
+    min-height: 56px;
+    padding: 8px 6px;
+  }
+
+  .nh-robot-hack-results__label {
+    font-size: 13px;
+  }
+
+  .nh-robot-hack-results__value {
+    font-size: 12px;
+    word-break: break-word;
+  }
+
+  .nh-robot-hack-results__countdown {
+    font-size: 22px;
+  }
+}

@@ -1,0 +1,68 @@
+/* Mobile foundation — dùng chung mọi trang sau login */
+
+.nh-hub,
+.casino-lobby-page,
+.room-cyber-page {
+  overflow-x: clip;
+}
+
+.x88-hub__body .container-fluid.lobby-bg,
+.x88-hub__body .lobby-bg.max-w-screen-xl,
+.nh-hub .container-fluid.lobby-bg,
+.nh-hub .lobby-bg.max-w-screen-xl {
+  max-width: 100%;
+  box-sizing: border-box;
+  padding-left: max(12px, env(safe-area-inset-left, 0px));
+  padding-right: max(12px, env(safe-area-inset-right, 0px));
+}
+
+.x88-hub__body .container.mx-auto,
+.nh-hub .container.mx-auto {
+  max-width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+@media (max-width: 640px) {
+  .x88-hub__body .all-programs,
+  .nh-hub .all-programs {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .x88-hub__body .all-programs .box-game,
+  .nh-hub .all-programs .box-game {
+    width: min(100%, 280px) !important;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .nh-slot-sec,
+  .nh-slot-cats {
+    padding-left: max(4px, env(safe-area-inset-left, 0px));
+    padding-right: max(4px, env(safe-area-inset-right, 0px));
+  }
+
+  .nh-slot-cats__btn {
+    padding: 0 14px;
+    height: 34px;
+  }
+}
+
+@media (max-width: 380px) {
+  .nh-jackpot__games {
+    grid-template-columns: 1fr;
+    max-width: 280px;
+  }
+
+  .nh-slot-cats {
+    gap: 8px;
+  }
+
+  .nh-slot-cats__btn {
+    flex: 1 1 calc(50% - 8px);
+    min-width: 0;
+    padding: 0 10px;
+    font-size: 10px;
+  }
+}

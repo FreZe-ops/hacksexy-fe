@@ -1,0 +1,110 @@
+/* Trang hub home — nội dung trong AppSidebarLayout */
+
+.x88-hub__main {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0;
+  padding: 32px 24px 28px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.x88-hub__hero {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto 36px;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+.x88-hub__hero-title {
+  margin: 0;
+  font-family: "Source Code Pro", ui-monospace, monospace;
+  font-size: clamp(28px, 4.8vw, 62.4px);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  text-align: center;
+  color: #ffffff;
+  text-shadow: 0 0 10.25px #00ff77;
+}
+
+.x88-hub__cards-zone {
+  width: 100%;
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+.x88-hub__cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: clamp(16px, 3vw, 32px);
+  width: 100%;
+}
+
+.x88-hub__card {
+  display: block;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.x88-hub__card:hover {
+  transform: translateY(-4px);
+  filter: brightness(1.06);
+}
+
+.x88-hub__card:active {
+  transform: translateY(-1px);
+}
+
+.x88-hub__card-img {
+  display: block;
+  width: 364px;
+  max-width: min(364px, calc((100vw - 340px - 48px) / 2));
+  height: auto;
+  aspect-ratio: 364 / 538;
+  object-fit: contain;
+}
+
+@media (max-width: 640px) {
+  .x88-hub__main {
+    min-height: auto;
+    padding: 20px 12px 24px;
+    padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .x88-hub__cards {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .x88-hub__card-img {
+    width: min(364px, calc(100vw - 32px));
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .x88-hub__hero {
+    margin-bottom: 24px;
+  }
+
+  .x88-hub__cards {
+    gap: 14px;
+  }
+}
