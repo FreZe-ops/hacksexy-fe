@@ -328,7 +328,7 @@ header .btn-home p::before {
   transition: 0.5s;
   visibility: hidden;
   opacity: 0;
-  z-index: 10;
+  z-index: 220;
 }
 /* line 15, ../sass/_model.scss */
 .model-group .overlay {
@@ -2787,8 +2787,15 @@ body.login-scroll-lock {
   overflow: hidden;
 }
 
-.login-page{
+.login-page {
   overflow: hidden;
+}
+
+@media screen and (max-width: 960px) {
+  .login-page {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
 }
 /* Custom: Text Header */
 /* Header + Text Title block */

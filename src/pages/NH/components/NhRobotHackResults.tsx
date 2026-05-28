@@ -69,7 +69,9 @@ export default function NhRobotHackResults({
 
           <div className="nh-robot-hack-results__box">
             <div className="nh-robot-hack-results__label">LÀM MỚI SAU</div>
-            <div className="nh-robot-hack-results__countdown">{refreshText}</div>
+            <div className="nh-robot-hack-results__value nh-robot-hack-results__value--accent">
+              {refreshText}
+            </div>
           </div>
         </div>
       </div>

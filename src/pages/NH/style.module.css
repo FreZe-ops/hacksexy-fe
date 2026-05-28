@@ -607,7 +607,7 @@
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 640px) {
     .loadTime {
         margin-top: 0;
         margin-bottom: 12px;

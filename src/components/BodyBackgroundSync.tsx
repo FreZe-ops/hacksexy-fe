@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 function applyGameBodyBg() {
-  document.body.style.backgroundColor = "#0a0000";
+  // Tránh flash nền đỏ khi reload trước khi video background render
+  document.body.style.backgroundColor = "#00120e";
   document.body.style.backgroundImage = "none";
   document.body.style.backgroundSize = "";
   document.body.style.backgroundPosition = "";

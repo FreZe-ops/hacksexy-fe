@@ -237,80 +237,98 @@ const ModalUser: React.FC<IProps> = ({
       return error;
     }
   };
+  const handleClose = () => {
+    onCanEdit();
+    onCancel();
+  };
+
   return (
     <Modal
-      title="Create User"
+      title={
+        <div className="admin-modal__head">
+          <h2 className="admin-modal__head-title">
+            {isShowEdit ? "Sửa tài khoản" : "Tạo tài khoản"}
+          </h2>
+          <p className="admin-modal__head-sub">
+            {isShowEdit
+              ? "Cập nhật thông tin đăng nhập của người dùng"
+              : "Thêm người dùng mới vào hệ thống"}
+          </p>
+        </div>
+      }
       open={isShowCreate || isShowEdit}
-      onCancel={() => {
-        onCanEdit();
-        onCancel();
-      }}
+      onCancel={handleClose}
       footer={null}
-      wrapClassName="admin-modal"
+      centered
+      width={480}
+      destroyOnClose
+      wrapClassName="admin-modal admin-modal--user"
     >
-      <Form onFinish={isShowCreate ? functionHandleCreate : handleEdit} form={form}>
+      <Form
+        className="admin-modal__form"
+        layout="vertical"
+        requiredMark="optional"
+        initialValues={{ role: "r_user" }}
+        onFinish={isShowCreate ? functionHandleCreate : handleEdit}
+        form={form}
+      >
         <Form.Item
-          label="UserName"
+          label="Tên đăng nhập"
           name="username"
-          labelCol={{ span: 24 }}
-          rules={[{ required: true, message: "Please input your UserName!" }]}
+          rules={[{ required: true, message: "Vui lòng nhập tên đăng nhập" }]}
         >
-          <Input />
+          <Input size="large" placeholder="vd: player01" autoComplete="username" />
         </Form.Item>
         <Form.Item
-          label="SDT"
+          label="Số điện thoại"
           name="phone"
-          labelCol={{ span: 24 }}
-          rules={[{ required: true, message: "Please input your Phone!" }]}
+          rules={[
+            { required: true, message: "Vui lòng nhập số điện thoại" },
+            { pattern: /^[0-9]{10}$/, message: "Số điện thoại gồm 10 chữ số" },
+          ]}
         >
-          <Input maxLength={10} />
+          <Input size="large" maxLength={10} placeholder="09xxxxxxxx" inputMode="numeric" />
         </Form.Item>
         <Form.Item
-          label="Password"
+          label="Mật khẩu"
           name="password"
-          labelCol={{ span: 24 }}
           rules={
             isShowCreate
-              ? [{ required: true, message: "Please input your Password!" }]
+              ? [{ required: true, message: "Vui lòng nhập mật khẩu" }]
               : undefined
           }
         >
-          <Input.Password />
+          <Input.Password
+            size="large"
+            placeholder={isShowEdit ? "Để trống nếu không đổi" : "Tối thiểu 6 ký tự"}
+            autoComplete="new-password"
+          />
         </Form.Item>
-        <Form.Item
-          label="Nhập lại password"
-          name="re_password"
-          labelCol={{ span: 24 }}
-          rules={
-            isShowCreate
-              ? [{ required: true, message: "Please input your Re-Password!" }]
-              : undefined
-          }
-        >
-          <Input.Password />
-        </Form.Item>
+        {isShowCreate ? (
+          <Form.Item
+            label="Nhập lại mật khẩu"
+            name="re_password"
+            rules={[{ required: true, message: "Vui lòng nhập lại mật khẩu" }]}
+          >
+            <Input.Password size="large" placeholder="Nhập lại mật khẩu" autoComplete="new-password" />
+          </Form.Item>
+        ) : null}
 
-        {userInfo?.role === "SUPERADMIN" && (
-          <Form.Item label="Quyền Hạn" name="role">
-            <Radio.Group defaultValue="r_user">
-              <Radio value="r_admin">Admin</Radio>
-              <Radio value="r_user">User</Radio>
+        {userInfo?.role === "SUPERADMIN" && isShowCreate ? (
+          <Form.Item label="Quyền hạn" name="role" className="admin-modal__role-item">
+            <Radio.Group className="admin-modal__role-group" optionType="button" buttonStyle="solid">
+              <Radio.Button value="r_admin">Admin</Radio.Button>
+              <Radio.Button value="r_user">User</Radio.Button>
             </Radio.Group>
           </Form.Item>
-        )}
+        ) : null}
 
-
-        <div className="flex justify-end gap-3">
-          <Button type="primary" className="admin-modal__submit" htmlType="submit">
-            Lưu
-          </Button>
-          <Button
-            onClick={() => {
-              onCanEdit();
-              onCancel();
-            }}
-          >
+        <div className="admin-modal__footer">
+          <Button type="default" className="admin-modal__cancel" onClick={handleClose}>
             Đóng
+          </Button>
+          <Button type="primary" className="admin-modal__submit" htmlType="submit">
+            {isShowEdit ? "Cập nhật" : "Tạo tài khoản"}
           </Button>
         </div>
       </Form>

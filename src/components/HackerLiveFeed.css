@@ -285,6 +285,11 @@
 }
 
 @media (max-width: 640px) {
+  /* Mobile: tắt hoàn toàn 2 modal chạy thông tin (live + terminal) */
+  .hacker-feed {
+    display: none !important;
+  }
+
   .hacker-feed {
     width: min(300px, calc(100vw - 20px));
     font-size: 10px;

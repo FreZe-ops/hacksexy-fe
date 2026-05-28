@@ -104,6 +104,58 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px 10px;
+  align-items: start;
+}
+
+.nh-slot-sec__grid-item {
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 640px) {
+  .nh-slot-sec__grid {
+    justify-items: stretch;
+    gap: 14px 10px;
+  }
+
+  .nh-slot-sec__grid-item {
+    display: flex;
+    justify-content: center;
+  }
+
+  .nh-slot-sec__grid-item--fade {
+    animation: nhSlotGridFadeIn 0.3s ease-in-out;
+  }
+}
+
+@keyframes nhSlotGridFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media (min-width: 641px) {
+  .nh-slot-sec__grid-item--fade {
+    animation: nhSlotGridFadeInDesktop 0.3s ease-in-out;
+  }
+}
+
+@keyframes nhSlotGridFadeInDesktop {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (min-width: 640px) {

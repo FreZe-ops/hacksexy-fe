@@ -242,18 +242,19 @@
   transition: none;
 }
 
-@media (max-width: 520px) {
-  .nh-basic-card {
-    width: 100%;
-    max-width: 238px;
-    height: 332px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
-
 @media (max-width: 640px) {
-  .nh-slot-sec__grid {
-    justify-items: center;
+  .nh-slot-sec__grid .nh-basic-card {
+    width: 100%;
+    max-width: none;
+    height: auto;
+    aspect-ratio: 238 / 332;
+    min-height: 260px;
+    margin: 0;
+  }
+
+  .nh-slot-sec__grid .nh-basic-game-image {
+    width: min(72%, 170px);
+    height: auto;
+    aspect-ratio: 1;
   }
 }

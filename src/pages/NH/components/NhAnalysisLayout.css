@@ -123,7 +123,7 @@
 }
 
 .nh-analysis__robot.nh-analysis__robot--hack-results {
-  width: min(268px, 42vw);
+  width: min(328px, 52vw);
 }
 
 .nh-analysis__robot .nh-robot-widget__bubble {
@@ -380,6 +380,12 @@
   cursor: not-allowed;
 }
 
+.nh-analysis__vip-btn--stop {
+  background: linear-gradient(90deg, #00472e 0%, #00691c 55%, #00aa7c 100%);
+  border-color: rgba(0, 255, 26, 0.55);
+  box-shadow: 0 0 12px rgba(0, 255, 26, 0.28);
+}
+
 /* --- Panel điều khiển — nền frame-table-2.png --- */
 .nh-analysis__panel--control {
   border: none;
@@ -631,16 +637,25 @@
     font-size: 13px;
   }
 
-  .nh-analysis__robot.nh-robot-widget,
+  .nh-analysis__robot.nh-robot-widget {
+    width: min(252px, calc(100vw - 28px));
+    max-width: min(252px, calc(100vw - 28px));
+  }
+
   .nh-analysis__robot.nh-robot-widget--hack-open,
-  .nh-analysis__robot.nh-analysis__robot--hack-open,
+  .nh-analysis__robot.nh-analysis__robot--hack-open {
+    width: min(268px, calc(100vw - 24px));
+    max-width: min(268px, calc(100vw - 24px));
+  }
+
   .nh-analysis__robot.nh-analysis__robot--hack-results {
-    width: min(320px, calc(100vw - 24px));
-    max-width: min(320px, calc(100vw - 24px));
+    width: min(284px, calc(100vw - 22px));
+    max-width: min(284px, calc(100vw - 22px));
   }
 
   .nh-analysis__robot .nh-robot-widget__img {
-    width: min(160px, 46vw);
+    width: min(118px, 34vw);
+    max-height: 148px;
   }
 
   .nh-analysis__robot .nh-robot-widget__bubble {

@@ -27,6 +27,7 @@ export type NhAnalysisLayoutProps = {
   onStopHack: () => void;
   onAddCoins: () => void;
   onVipActivate: () => void;
+  onVipStop: () => void;
   vipHackActive: boolean;
   vipBusy: boolean;
   isSpinning: boolean;
@@ -59,6 +60,7 @@ export default function NhAnalysisLayout({
   onStopHack,
   onAddCoins,
   onVipActivate,
+  onVipStop,
   vipHackActive,
   vipBusy,
   isSpinning,
@@ -138,11 +140,17 @@ export default function NhAnalysisLayout({
               <div className="nh-analysis__vip-title">VIP FEATURE</div>
               <button
                 type="button"
-                className="nh-analysis__vip-btn"
+                className={
+                  "nh-analysis__vip-btn" +
+                  (vipHackActive ? " nh-analysis__vip-btn--stop" : "")
+                }
                 disabled={vipBusy}
-                onClick={() => void onVipActivate()}
+                onClick={() => {
+                  if (vipHackActive) onVipStop();
+                  else void onVipActivate();
+                }}
               >
-                {vipHackActive ? "> KÍCH HOẠT LẠI <" : "> KÍCH HOẠT NGAY <"}
+                {vipHackActive ? "> DỪNG KÍCH HOẠT <" : "> KÍCH HOẠT NGAY <"}
               </button>
             </div>
           </div>

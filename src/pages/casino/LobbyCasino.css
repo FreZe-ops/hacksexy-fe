@@ -99,6 +99,26 @@
   font-weight: 800;
 }
 
+/* PC: BACK absolute — title + status căn giữa */
+@media (min-width: 641px) {
+  .casino-lobby-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+  }
+
+  .casino-lobby-title {
+    text-align: center;
+    width: 100%;
+  }
+
+  .casino-lobby-status {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
 /* Lưới bàn — 3 thẻ / hàng (desktop), thẻ 445×312 — nền + viền CSS (không dùng ảnh khung) */
 .casino-lobby-tables {
   display: grid;

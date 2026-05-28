@@ -124,11 +124,12 @@
 
 @media (max-width: 640px) {
   .nh-robot-widget {
-    width: min(260px, calc(100vw - 24px));
+    width: min(228px, calc(100vw - 28px));
   }
 
   .nh-robot-widget__img {
-    max-height: 180px;
+    width: min(200px, 100%);
+    max-height: 148px;
   }
 
   .nh-robot-widget--embedded {

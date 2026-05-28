@@ -127,7 +127,7 @@ const ModalGameScreenLink: React.FC<IProps> = ({
           <Input placeholder="https://..." />
         </Form.Item>
         <Form.Item label="Dùng làm link mặc định" name="isDefault" valuePropName="checked">
-          <Switch />
+          <Switch className="admin-modal__switch" />
         </Form.Item>
         <Button type="primary" htmlType="submit" block className="admin-modal__submit">
           Lưu

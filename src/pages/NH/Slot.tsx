@@ -543,14 +543,11 @@ const Slot = () => {
           <div
             key={item._id}
             className={
-              isMobile
+              "nh-slot-sec__grid-item nh-slot-sec__grid-item--fade" +
+              (isMobile
                 ? ""
-                : "transition-all duration-300 ease-in-out transform hover:scale-105"
+                : " transition-all duration-300 ease-in-out transform hover:scale-105")
             }
-            style={{
-              opacity: 1,
-              animation: "fadeIn 0.3s ease-in-out",
-            }}
           >
             <ProgressBar
               percentage={item.percent}

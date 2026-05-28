@@ -1,6 +1,6 @@
 .nh-robot-hack-results {
-  width: min(268px, 84vw);
-  min-height: 400px;
+  width: min(328px, 92vw);
+  min-height: 520px;
   margin: 0 auto 6px;
   background-color: transparent;
   background-repeat: no-repeat;
@@ -26,19 +26,20 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 12px;
-  padding: 28px 12px 20px;
+  gap: 14px;
+  padding: 32px 14px 24px;
   min-height: 100%;
   box-sizing: border-box;
 }
 
+/* Tiêu đề panel — lớn nhất */
 .nh-robot-hack-results__title {
   text-align: center;
   color: #f7ff00;
   font-family: "Source Code Pro", ui-monospace, monospace;
-  font-size: 16px;
-  font-weight: 800;
-  letter-spacing: 0.03em;
+  font-size: clamp(20px, 5vw, 26px);
+  font-weight: 900;
+  letter-spacing: 0.04em;
   line-height: 1.25;
   text-shadow: 0 0 10px rgba(247, 255, 0, 0.35);
 }
@@ -46,7 +47,7 @@
 .nh-robot-hack-results__grid {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
   flex: 1;
 }
 
@@ -55,9 +56,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 5px;
-  min-height: 62px;
-  padding: 10px 8px;
+  gap: 6px;
+  min-height: 84px;
+  padding: 14px 12px;
   border: 1px solid rgba(0, 255, 26, 0.85);
   background: rgba(0, 0, 0, 0.28);
   box-shadow:
@@ -66,65 +67,69 @@
   text-align: center;
 }
 
+/* Nhãn ô — cùng cỡ nhau, nhỏ hơn title */
 .nh-robot-hack-results__label {
   color: #f7ff00;
   font-family: "Roboto", "Segoe UI", sans-serif;
   font-size: 15px;
-  font-weight: 900;
-  letter-spacing: 0.02em;
-  line-height: 1.15;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  line-height: 1.25;
+  text-transform: uppercase;
 }
 
+/* Giá trị + đếm ngược — cùng cỡ nhau */
 .nh-robot-hack-results__value {
   color: #ffffff;
   font-family: "Roboto", "Segoe UI", sans-serif;
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 700;
-  line-height: 1.25;
+  line-height: 1.35;
+  letter-spacing: 0.02em;
 }
 
-.nh-robot-hack-results__countdown {
+.nh-robot-hack-results__value--accent {
   color: #00ff55;
   font-family: "Source Code Pro", ui-monospace, monospace;
-  font-size: 26px;
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  line-height: 1;
-  text-shadow: 0 0 14px rgba(0, 255, 85, 0.55);
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 0 8px rgba(0, 255, 85, 0.4);
 }
 
 @media (max-width: 640px) {
   .nh-robot-hack-results {
     width: 100%;
     max-width: 100%;
-    min-height: 360px;
+    min-height: 400px;
     margin: 0 auto 4px;
   }
 
   .nh-robot-hack-results__inner {
-    padding: 24px 10px 16px;
+    padding: 24px 10px 18px;
     gap: 10px;
   }
 
   .nh-robot-hack-results__title {
-    font-size: 14px;
+    font-size: clamp(19px, 5.5vw, 24px);
   }
 
   .nh-robot-hack-results__box {
-    min-height: 56px;
-    padding: 8px 6px;
+    min-height: 68px;
+    padding: 10px 8px;
+    gap: 5px;
   }
 
   .nh-robot-hack-results__label {
-    font-size: 13px;
+    font-size: 14px;
   }
 
   .nh-robot-hack-results__value {
-    font-size: 12px;
+    font-size: 15px;
     word-break: break-word;
   }
+}
 
-  .nh-robot-hack-results__countdown {
-    font-size: 22px;
+@media (prefers-reduced-motion: reduce) {
+  .nh-robot-hack-results {
+    animation: none;
   }
 }

@@ -317,13 +317,17 @@
 }
 
 .admin-shell .ant-btn-primary {
-  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
+  background: linear-gradient(135deg, #8b93ff 0%, #6366f1 45%, #5046e5 100%) !important;
   border: none !important;
-  box-shadow: 0 8px 18px rgba(79, 70, 229, 0.24);
+  color: #ffffff !important;
+  box-shadow: 0 10px 22px rgba(99, 102, 241, 0.42);
   font-weight: 700;
+  opacity: 1 !important;
 }
 
-.admin-shell .ant-btn-primary:hover {
+.admin-shell .ant-btn-primary:not(:disabled):hover {
+  background: linear-gradient(135deg, #a5b4fc 0%, #7c83f6 45%, #5b52eb 100%) !important;
+  box-shadow: 0 12px 26px rgba(99, 102, 241, 0.52);
   filter: brightness(1.04);
 }
 
@@ -415,6 +419,180 @@
 .admin-modal .ant-input,
 .admin-modal .ant-input-affix-wrapper {
   border-radius: 10px !important;
+  border-color: #e2e8f0 !important;
+  background: #f8fafc !important;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.admin-modal .ant-input-lg,
+.admin-modal .ant-input-affix-wrapper-lg {
+  min-height: 44px;
+  font-size: 14px;
+}
+
+.admin-modal .ant-input:hover,
+.admin-modal .ant-input-affix-wrapper:hover {
+  border-color: #cbd5e1 !important;
+  background: #ffffff !important;
+}
+
+.admin-modal .ant-input:focus,
+.admin-modal .ant-input-affix-wrapper-focused,
+.admin-modal .ant-input-affix-wrapper:focus,
+.admin-modal .ant-input-affix-wrapper:focus-within {
+  border-color: #818cf8 !important;
+  background: #ffffff !important;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.14) !important;
+}
+
+.admin-modal .ant-form-item {
+  margin-bottom: 16px;
+}
+
+.admin-modal .ant-form-item .ant-form-item-explain-error {
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.admin-modal__head-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.3;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+}
+
+.admin-modal__head-sub {
+  margin: 6px 0 0;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.45;
+  color: #64748b;
+}
+
+.admin-modal--user .ant-modal-body {
+  padding: 8px 24px 24px;
+}
+
+.admin-modal__form .ant-form-item-label > label {
+  font-size: 13px;
+  height: auto;
+}
+
+.admin-modal__role-item {
+  margin-bottom: 4px !important;
+}
+
+.admin-modal__role-group {
+  display: flex !important;
+  width: 100%;
+  gap: 0;
+}
+
+.admin-modal__role-group .ant-radio-button-wrapper {
+  flex: 1;
+  height: 42px;
+  line-height: 40px;
+  text-align: center;
+  font-weight: 600;
+  color: #475569;
+  border-color: #e2e8f0 !important;
+  background: #f8fafc;
+}
+
+.admin-modal__role-group .ant-radio-button-wrapper:first-child {
+  border-radius: 10px 0 0 10px !important;
+}
+
+.admin-modal__role-group .ant-radio-button-wrapper:last-child {
+  border-radius: 0 10px 10px 0 !important;
+}
+
+.admin-modal__role-group .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
+  color: #ffffff !important;
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
+  border-color: #4f46e5 !important;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.28);
+}
+
+.admin-modal__role-group .ant-radio-button-wrapper:hover {
+  color: #4f46e5;
+}
+
+.admin-modal__footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(15, 23, 42, 0.06);
+}
+
+.admin-modal__cancel.ant-btn {
+  min-height: 44px;
+  padding: 0 22px;
+  border-radius: 12px !important;
+  border: 1px solid #e2e8f0 !important;
+  background: #ffffff !important;
+  color: #475569 !important;
+  font-weight: 600 !important;
+  box-shadow: none !important;
+}
+
+.admin-modal__cancel.ant-btn:hover {
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+  background: #f8fafc !important;
+}
+
+.admin-modal--user .admin-modal__footer .admin-modal__submit.ant-btn-primary {
+  min-width: 132px;
+  box-shadow: 0 8px 18px rgba(99, 102, 241, 0.32);
+}
+
+/* Switch — track/handle tối để không chìm nền trắng */
+.admin-modal .ant-switch,
+.admin-modal__switch.ant-switch {
+  min-width: 48px;
+  height: 26px;
+  line-height: 26px;
+  background: #94a3b8 !important;
+  border: 1px solid #64748b;
+  box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.12);
+}
+
+.admin-modal .ant-switch:hover:not(.ant-switch-disabled),
+.admin-modal__switch.ant-switch:hover:not(.ant-switch-disabled) {
+  background: #64748b !important;
+  border-color: #475569;
+}
+
+.admin-modal .ant-switch .ant-switch-handle::before,
+.admin-modal__switch.ant-switch .ant-switch-handle::before {
+  background: #ffffff !important;
+  box-shadow:
+    0 2px 6px rgba(15, 23, 42, 0.28),
+    0 0 0 1px rgba(15, 23, 42, 0.08);
+}
+
+.admin-modal .ant-switch.ant-switch-checked,
+.admin-modal__switch.ant-switch.ant-switch-checked {
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
+  border-color: #4338ca;
+  box-shadow:
+    0 4px 12px rgba(79, 70, 229, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.admin-modal .ant-switch.ant-switch-checked:hover:not(.ant-switch-disabled),
+.admin-modal__switch.ant-switch.ant-switch-checked:hover:not(.ant-switch-disabled) {
+  background: linear-gradient(135deg, #7577f7 0%, #5b52eb 100%) !important;
+  border-color: #4f46e5;
 }
 
 .admin-modal .ant-btn-primary,
@@ -422,23 +600,33 @@
   min-height: 44px;
   border: none !important;
   border-radius: 12px !important;
-  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
-  color: #fff !important;
+  background: linear-gradient(135deg, #8b93ff 0%, #6366f1 45%, #5046e5 100%) !important;
+  color: #ffffff !important;
   font-weight: 700 !important;
-  box-shadow: 0 8px 18px rgba(79, 70, 229, 0.28);
+  font-size: 15px !important;
+  letter-spacing: 0.03em;
+  text-shadow: 0 1px 2px rgba(15, 23, 42, 0.2);
+  opacity: 1 !important;
+  box-shadow:
+    0 10px 22px rgba(99, 102, 241, 0.48),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
 }
 
-.admin-modal .ant-btn-primary:hover,
-.admin-modal__submit.ant-btn-primary:hover {
-  background: linear-gradient(135deg, #7577f7 0%, #5b52eb 100%) !important;
-  color: #fff !important;
-  filter: brightness(1.03);
+.admin-modal .ant-btn-primary:not(:disabled):hover,
+.admin-modal__submit.ant-btn-primary:not(:disabled):hover {
+  background: linear-gradient(135deg, #a5b4fc 0%, #7c83f6 45%, #5b52eb 100%) !important;
+  color: #ffffff !important;
+  box-shadow:
+    0 12px 26px rgba(99, 102, 241, 0.58),
+    inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  filter: brightness(1.04);
 }
 
-.admin-modal .ant-btn-primary:active,
-.admin-modal__submit.ant-btn-primary:active {
-  background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%) !important;
-  color: #fff !important;
+.admin-modal .ant-btn-primary:not(:disabled):active,
+.admin-modal__submit.ant-btn-primary:not(:disabled):active {
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 14px rgba(79, 70, 229, 0.42);
 }
 
 .admin-shell .ant-modal-content {

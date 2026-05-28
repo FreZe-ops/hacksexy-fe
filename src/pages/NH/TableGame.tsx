@@ -618,9 +618,12 @@ const TableGameNew = () => {
 
   const closeVipPopup = () => setIsVipPopupOpen(false);
 
+  const isVipRunning = vipHackActive || vipHackUiVisible;
+
   const handleVipFeatureClick = async () => {
     if (isVipHackPopupStarting) return;
     if (isVipFeatureCharging) return;
+    if (isVipRunning) return;
 
     if (userCoins < 20) {
       showInsufficientXuModal(20);
@@ -754,6 +757,11 @@ const TableGameNew = () => {
     // Bấm xong chạy ngay: đóng popup VIP liền, không dùng setTimeout 3s nữa
     setIsVipPopupOpen(false);
     setIsVipHackPopupStarting(false);
+
+    if (!isFishingTable) {
+      setRobotVisible(true);
+      startRefreshCountdown();
+    }
   };
 
   const stopVipHackNow = () => {
@@ -769,6 +777,10 @@ const TableGameNew = () => {
     setVipHackEndsAtMs(null);
     setVipHackRemainingSec(0);
     setIsVipHackPopupStarting(false);
+
+    if (!isFishingTable) {
+      stopHackNow();
+    }
   };
 
   useEffect(() => {
@@ -1397,12 +1409,14 @@ const TableGameNew = () => {
                   role="button"
                   tabIndex={0}
                   onClick={() => {
-                    void handleVipFeatureClick();
+                    if (isVipRunning) stopVipHackNow();
+                    else void handleVipFeatureClick();
                   }}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" || e.key === " ") {
                       e.preventDefault();
-                      void handleVipFeatureClick();
+                      if (isVipRunning) stopVipHackNow();
+                      else void handleVipFeatureClick();
                     }
                   }}
                   style={{
@@ -1451,7 +1465,8 @@ const TableGameNew = () => {
                     disabled={isVipHackPopupStarting || isVipFeatureCharging}
                     onClick={(e) => {
                       e.stopPropagation();
-                      void handleVipFeatureClick();
+                      if (isVipRunning) stopVipHackNow();
+                      else void handleVipFeatureClick();
                     }}
                     style={{
                       marginTop: 4,
@@ -1459,8 +1474,8 @@ const TableGameNew = () => {
                       minHeight: 28,
                       padding: "4px 10px",
                       borderRadius: 999,
-                      background: vipHackActive
-                        ? "linear-gradient(90deg, #ff6600 0%, #ff2200 100%)"
+                      background: isVipRunning
+                        ? "linear-gradient(90deg, #00472e 0%, #00691c 100%)"
                         : "linear-gradient(90deg, #ff8c00 0%, #ff4500 100%)",
                       color: "#ffffff",
                       fontWeight: 900,
@@ -1472,16 +1487,18 @@ const TableGameNew = () => {
                       justifyContent: "center",
                       cursor:
                         isVipHackPopupStarting || isVipFeatureCharging ? "not-allowed" : "pointer",
-                      border: "1px solid rgba(255, 200, 120, 0.45)",
+                      border: isVipRunning
+                        ? "1px solid rgba(0, 255, 26, 0.45)"
+                        : "1px solid rgba(255, 200, 120, 0.45)",
                       opacity:
-                        isVipHackPopupStarting || isVipFeatureCharging ? 0.65 : vipHackActive ? 1 : 0.92,
+                        isVipHackPopupStarting || isVipFeatureCharging ? 0.65 : 1,
                       transition: "opacity 0.15s ease, background 0.15s ease, filter 0.15s ease",
                       boxSizing: "border-box",
                     }}
                   >
-                    {vipHackActive ? (
+                    {isVipRunning ? (
                       <>
-                        {"\u003E"} KÍCH HOẠT LẠI {"\u003C"}
+                        {"\u003E"} DỪNG KÍCH HOẠT {"\u003C"}
                       </>
                     ) : (
                       <>
@@ -1614,12 +1631,14 @@ const TableGameNew = () => {
                   role="button"
                   tabIndex={0}
                   onClick={() => {
-                    void handleVipFeatureClick();
+                    if (isVipRunning) stopVipHackNow();
+                    else void handleVipFeatureClick();
                   }}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" || e.key === " ") {
                       e.preventDefault();
-                      void handleVipFeatureClick();
+                      if (isVipRunning) stopVipHackNow();
+                      else void handleVipFeatureClick();
                     }
                   }}
                   style={{
@@ -1667,7 +1686,8 @@ const TableGameNew = () => {
                     disabled={isVipHackPopupStarting || isVipFeatureCharging}
                     onClick={(e) => {
                       e.stopPropagation();
-                      void handleVipFeatureClick();
+                      if (isVipRunning) stopVipHackNow();
+                      else void handleVipFeatureClick();
                     }}
                     style={{
                       marginTop: 4,
@@ -1675,8 +1695,8 @@ const TableGameNew = () => {
                       minHeight: 28,
                       padding: "4px 10px",
                       borderRadius: 999,
-                      background: vipHackActive
-                        ? "linear-gradient(90deg, #ff6600 0%, #ff2200 100%)"
+                      background: isVipRunning
+                        ? "linear-gradient(90deg, #00472e 0%, #00691c 100%)"
                         : "linear-gradient(90deg, #ff8c00 0%, #ff4500 100%)",
                       color: "#ffffff",
                       fontWeight: 900,
@@ -1687,13 +1707,15 @@ const TableGameNew = () => {
                       alignItems: "center",
                       justifyContent: "center",
                       cursor: isVipHackPopupStarting || isVipFeatureCharging ? "not-allowed" : "pointer",
-                      border: "1px solid rgba(255, 200, 120, 0.45)",
-                      opacity: isVipHackPopupStarting || isVipFeatureCharging ? 0.65 : vipHackActive ? 1 : 0.92,
+                      border: isVipRunning
+                        ? "1px solid rgba(0, 255, 26, 0.45)"
+                        : "1px solid rgba(255, 200, 120, 0.45)",
+                      opacity: isVipHackPopupStarting || isVipFeatureCharging ? 0.65 : 1,
                       transition: "opacity 0.15s ease, background 0.15s ease, filter 0.15s ease",
                       boxSizing: "border-box",
                     }}
                   >
-                    {"\u003E"} {vipHackActive ? "KÍCH HOẠT LẠI" : "KÍCH HOẠT NGAY"} {"\u003C"}
+                    {"\u003E"} {isVipRunning ? "DỪNG KÍCH HOẠT" : "KÍCH HOẠT NGAY"} {"\u003C"}
                   </button>
                 </div>
               </>
@@ -1886,15 +1908,21 @@ const TableGameNew = () => {
           onRobotVisibleChange={setRobotVisible}
           onBack={handleBack}
           onSeeResults={() => void handleSeeResultsClick()}
-          onStopHack={stopHackNow}
+          onStopHack={() => {
+            if (vipHackActive || vipHackUiVisible) stopVipHackNow();
+            else stopHackNow();
+          }}
           onAddCoins={() => showInsufficientXuModal(1)}
           onVipActivate={() => void handleVipFeatureClick()}
-          vipHackActive={vipHackActive}
+          onVipStop={stopVipHackNow}
+          vipHackActive={isVipRunning}
           vipBusy={isVipHackPopupStarting || isVipFeatureCharging}
           isSpinning={isSpinning}
           showHackInput={isHackPopupOpen && hackPopupMode === "input"}
           showHackLoading={!isFishingTable && hackPopupMode === "loading"}
-          showHackResults={!isFishingTable && showHackResults}
+          showHackResults={
+            !isFishingTable && (showHackResults || vipHackUiVisible || vipHackActive)
+          }
           manualValues={manualValues}
           autoValues={autoValues}
           timeSlotText={timeSlotText}
@@ -2363,24 +2391,9 @@ const TableGameNew = () => {
 
               <button
                 type="button"
+                className="nh-vip-popup__use-btn"
                 disabled={isVipHackPopupStarting || vipHackActive}
                 onClick={startVipHackNow}
-                style={{
-                  marginTop: 14,
-                  width: "100%",
-                  height: 42,
-                  border: "none",
-                  borderRadius: 12,
-                  background: "linear-gradient(90deg, #a60008 0%, #df0000 100%)",
-                  color: "#ffffff",
-                  fontWeight: 900,
-                  fontSize: isNarrow ? 13 : 14,
-                  textTransform: "uppercase",
-                  letterSpacing: 0.4,
-                  boxShadow: "0 0 18px rgba(223, 0, 0, 0.35)",
-                  cursor: isVipHackPopupStarting || vipHackActive ? "not-allowed" : "pointer",
-                  opacity: isVipHackPopupStarting || vipHackActive ? 0.8 : 1,
-                }}
               >
                 DÙNG HACK NGAY
               </button>

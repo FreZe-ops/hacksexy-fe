@@ -5,7 +5,6 @@ import { getAssetUrl } from "../utils/assetUrl";
 import "./ToolVideoBackground.css";
 
 const VIDEO_SRC = "/assets/bg-tool.mp4";
-const POSTER_SRC = "/assets/bg-pc.png";
 
 export default function ToolVideoBackground() {
   const { pathname } = useLocation();
@@ -17,13 +16,18 @@ export default function ToolVideoBackground() {
     const video = videoRef.current;
     if (!video) return;
 
-    const play = () => {
+    const onReady = () => {
+      video.classList.add("tool-video-bg__video--ready");
       void video.play().catch(() => {});
     };
 
-    play();
-    video.addEventListener("loadeddata", play);
-    return () => video.removeEventListener("loadeddata", play);
+    if (video.readyState >= 2) {
+      onReady();
+    } else {
+      video.addEventListener("loadeddata", onReady, { once: true });
+    }
+
+    return () => video.removeEventListener("loadeddata", onReady);
   }, [isAdmin, pathname]);
 
   if (isAdmin) return null;
@@ -34,7 +38,6 @@ export default function ToolVideoBackground() {
         ref={videoRef}
         className="tool-video-bg__video"
         src={getAssetUrl(VIDEO_SRC)}
-        poster={getAssetUrl(POSTER_SRC)}
         autoPlay
         loop
         muted

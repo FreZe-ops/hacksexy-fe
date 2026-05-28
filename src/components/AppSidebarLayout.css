@@ -15,6 +15,77 @@
   font-family: "Kanit-Regular", "Segoe UI", system-ui, sans-serif;
 }
 
+.x88-hub__mobile-header,
+.x88-hub__hamburger,
+.x88-hub__drawer-backdrop {
+  display: none;
+}
+
+.x88-hub__sidebar {
+  display: block;
+}
+
+.x88-hub__hamburger {
+  position: relative;
+  z-index: 1;
+  width: 56px;
+  height: 48px;
+  border: 2px solid rgba(0, 255, 26, 0.95);
+  background: rgba(1, 12, 1, 0.6);
+  box-shadow: 0 0 0 1px rgba(0, 255, 26, 0.2), 0 0 14px rgba(0, 255, 26, 0.25);
+  border-radius: 4px;
+  padding: 0;
+  cursor: pointer;
+}
+
+.x88-hub__hamburger-lines {
+  display: grid;
+  gap: 6px;
+  width: 26px;
+  margin: 0 auto;
+}
+
+.x88-hub__hamburger-lines span {
+  height: 3px;
+  border-radius: 999px;
+  background: #00ff1a;
+  box-shadow: 0 0 8px rgba(0, 255, 26, 0.35);
+}
+
+.x88-hub__drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 110;
+  border: none;
+  background: rgba(0, 0, 0, 0.52);
+  padding: 0;
+}
+
+.x88-hub__sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 115;
+  width: min(88vw, 360px);
+  max-width: calc(100vw - 56px);
+  transform: translateX(calc(-100% - 8px));
+  transition: transform 0.22s ease;
+  will-change: transform;
+}
+
+.x88-hub__sidebar.is-open {
+  transform: translateX(0);
+}
+
+.x88-hub__sidebar .hub-sidebar {
+  height: 100%;
+  max-height: 100dvh;
+  border-top: none;
+  border-left: none;
+  border-bottom: none;
+}
+
 .x88-hub__body {
   position: relative;
   flex: 1;
@@ -46,6 +117,67 @@
     overflow: hidden;
   }
 
+  .x88-hub__mobile-header {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    padding: max(10px, env(safe-area-inset-top, 0px)) 12px 10px;
+    box-sizing: border-box;
+    background: #003b0d;
+    z-index: 130;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .x88-hub__mobile-header.is-hidden {
+    display: none;
+  }
+
+  .x88-hub__hamburger {
+    position: absolute;
+    left: max(12px, env(safe-area-inset-left, 0px));
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .x88-hub__mobile-logo {
+    height: 44px;
+    width: auto;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+    filter: drop-shadow(0 0 10px rgba(0, 255, 26, 0.18));
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .x88-hub__hamburger,
+  .x88-hub__sidebar,
+  .x88-hub__drawer-backdrop {
+    display: block;
+  }
+
+  /* Drawer mặc định nằm dưới header */
+  .x88-hub__drawer-backdrop {
+    top: 64px;
+  }
+
+  .x88-hub__sidebar {
+    top: 64px;
+  }
+
+  /* Khi mở sidebar: ẩn header + drawer lên full height cho rõ */
+  .x88-hub.is-sidebar-open .x88-hub__drawer-backdrop {
+    top: 0;
+  }
+
+  .x88-hub.is-sidebar-open .x88-hub__sidebar {
+    top: 0;
+  }
+
   .x88-hub__body {
     flex: 1;
     min-height: 0;
@@ -56,10 +188,29 @@
     -webkit-overflow-scrolling: touch;
     container-type: inline-size;
     container-name: hub-body;
+    padding-top: calc(64px + env(safe-area-inset-top, 0px));
     padding-bottom: calc(168px + env(safe-area-inset-bottom, 0px));
   }
 
   .x88-hub .hacker-feed--left {
     left: max(12px, env(safe-area-inset-left, 0px));
+  }
+}
+
+/* Desktop/tablet: sidebar là flex item bình thường, không drawer */
+@media (min-width: 641px) {
+  .x88-hub__mobile-header,
+  .x88-hub__hamburger,
+  .x88-hub__drawer-backdrop {
+    display: none;
+  }
+
+  .x88-hub__sidebar {
+    position: relative;
+    transform: none;
+    transition: none;
+    width: auto;
+    max-width: none;
+    z-index: 10;
   }
 }

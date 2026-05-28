@@ -144,6 +144,10 @@ const HomeSidebar: React.FC<HomeSidebarProps> = ({ onLogoutClick }) => {
           <span className="hub-sidebar__frame-text hub-sidebar__logout-text">Đăng xuất</span>
         </button>
         </div>
+
+        <p className="hub-sidebar__version" aria-label="Phiên bản 1.09">
+          <span className="hub-sidebar__version-prompt">&gt;_</span>version 1.09
+        </p>
       </div>
     </aside>
   );

@@ -161,13 +161,23 @@ function formatLogTime(stampTime?: number): string {
 const AI_SLOTS_PER_SIDE = 10;
 const AI_TOTAL_SLOTS = AI_SLOTS_PER_SIDE * 2;
 
-const DECODE_LOG_SEQUENCE = [
-  { label: "VƯỢT TƯỜNG LỬA", code: "65F0" },
-  { label: "QUÉT DỮ LIỆU BÀN", code: "15F0" },
-  { label: "QUÉT DỮ LIỆU BÀN", code: "15F0" },
-  { label: "TÍNH TOÁN TỶ LỆ", code: "15F0" },
-  { label: "AI DỰ ĐOÁN: ĐANG TẢI", code: "15F0" },
+const DECODE_LOG_LABELS = [
+  "VƯỢT TƯỜNG LỬA",
+  "QUÉT DỮ LIỆU BÀN",
+  "QUÉT DỮ LIỆU BÀN",
+  "TÍNH TOÁN TỶ LỆ",
+  "AI DỰ ĐOÁN: ĐANG TẢI",
+  "GIẢI MÃ GÓI TIN",
+  "ĐỒNG BỘ NEURAL NET",
+  "PHÂN TÍCH PATTERN",
+  "QUÉT HASH PHIÊN",
+  "XÁC THỰC CHUỖI KHÓA",
 ] as const;
+
+function randomDecodeHexCode(): string {
+  const n = Math.floor(Math.random() * 0x10000);
+  return n.toString(16).toUpperCase().padStart(4, "0");
+}
 
 type AiSlotRow = {
   key: number;
@@ -403,6 +413,7 @@ const LobbyRoom: React.FC = () => {
   const [selectedKey, setSelectedKey] = useState<number | null>(1);
   const [nowTick, setNowTick] = useState(() => Date.now());
   const [maintenanceFeeLogs, setMaintenanceFeeLogs] = useState<number[]>([]);
+  const [decodeVisibleCount, setDecodeVisibleCount] = useState(1);
 
   /** Dự đoán đã khóa theo từng ván (khi có ván mới trong totalRound) — không đổi theo poll sau */
   const [roundPredictionByKey, setRoundPredictionByKey] = useState<
@@ -412,6 +423,8 @@ const LobbyRoom: React.FC = () => {
   const lastValidPredictionRef = useRef<string>("—");
   const prevRoundIdsRef = useRef<Set<string>>(new Set());
   const systemLogConnectTsRef = useRef<number>(Date.now());
+  const systemLogViewportRef = useRef<HTMLDivElement>(null);
+  const decodeLogViewportRef = useRef<HTMLDivElement>(null);
 
   const token = Cookies.get("access_token");
 
@@ -779,17 +792,57 @@ const LobbyRoom: React.FC = () => {
     return [...bootstrap, ...feeLogs, ...roundLogs]
       .sort((a, b) => a.stampTime - b.stampTime)
       .slice(-28)
-      .map(({ time, message, kind }) => ({ time, message, kind }));
+      .map(({ time, message, kind, stampTime }) => ({
+        time,
+        message,
+        kind,
+        stampTime,
+      }));
   }, [dataRoom?.totalRound, maintenanceFeeLogs, tableTitle]);
+
+  useEffect(() => {
+    const el = systemLogViewportRef.current;
+    if (!el) return;
+    requestAnimationFrame(() => {
+      el.scrollTop = el.scrollHeight;
+    });
+  }, [systemLogItems]);
 
   const decodeItems = useMemo(() => {
     return Array.from({ length: 13 }, (_, index) => {
-      const entry = DECODE_LOG_SEQUENCE[index % DECODE_LOG_SEQUENCE.length];
+      const label = DECODE_LOG_LABELS[index % DECODE_LOG_LABELS.length];
       return {
-        message: `${entry.label}...[${entry.code}]`,
+        message: `${label}...[${randomDecodeHexCode()}]`,
       };
     });
   }, [id]);
+
+  useEffect(() => {
+    setDecodeVisibleCount(1);
+  }, [id]);
+
+  useEffect(() => {
+    if (decodeVisibleCount >= decodeItems.length) return;
+
+    const timer = window.setTimeout(() => {
+      setDecodeVisibleCount((prev) => Math.min(prev + 1, decodeItems.length));
+    }, 2000);
+
+    return () => window.clearTimeout(timer);
+  }, [decodeVisibleCount, decodeItems.length]);
+
+  const visibleDecodeItems = useMemo(
+    () => decodeItems.slice(0, decodeVisibleCount),
+    [decodeItems, decodeVisibleCount]
+  );
+
+  useEffect(() => {
+    const el = decodeLogViewportRef.current;
+    if (!el) return;
+    requestAnimationFrame(() => {
+      el.scrollTop = el.scrollHeight;
+    });
+  }, [visibleDecodeItems]);
 
   const liveClock = useMemo(() => {
     try {
@@ -865,13 +918,16 @@ const LobbyRoom: React.FC = () => {
                     <h3 className="room-panel__title">&gt;&gt; NHẬT KÝ HỆ THỐNG</h3>
                   </div>
                   <div className="room-panel__divider" aria-hidden />
-                  <div className="room-log room-log--system">
-                    {systemLogItems.map((log, index) => (
+                  <div
+                    ref={systemLogViewportRef}
+                    className="room-log room-log--system"
+                  >
+                    {systemLogItems.map((log) => (
                       <p
                         className={`room-log__line${
                           log.kind === "fee" ? " room-log__line--fee" : ""
                         }`}
-                        key={`${log.time}-${log.kind}-${index}`}
+                        key={`${log.stampTime}-${log.kind}-${log.message}`}
                       >
                         <span className="room-log__time">[{log.time}]</span>{" "}
                         <span className="room-log__msg">{log.message}</span>
@@ -918,9 +974,12 @@ const LobbyRoom: React.FC = () => {
                     </h3>
                   </div>
                   <div className="room-panel__divider" aria-hidden />
-                  <div className="room-log room-log--decode">
-                    {decodeItems.map((log, index) => (
-                      <p className="room-log__line" key={`decode-${index}`}>
+                  <div
+                    ref={decodeLogViewportRef}
+                    className="room-log room-log--decode"
+                  >
+                    {visibleDecodeItems.map((log, index) => (
+                      <p className="room-log__line" key={`decode-${index}-${log.message}`}>
                         <span className="room-log__prefix">&gt;</span>{" "}
                         <span className="room-log__msg">{log.message}</span>
                       </p>

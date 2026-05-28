@@ -262,10 +262,12 @@ const Login: React.FC = () => {
 
   const onRegister = async (data: RegisterFormValues) => {
     try {
+      const managedByUsername =
+        referralCode.trim() !== "" ? referralCode.trim() : "superadmin";
       await axios
         .post(`${process.env.REACT_APP_URL_API}/auth/register`, {
           username: data.username,
-          managedByUsername: "superadmin",
+          managedByUsername,
           phone: data.phone_number,
           password: String(data.password),
         })
@@ -328,13 +330,18 @@ const Login: React.FC = () => {
         &gt;Tool tích hợp công nghệ ai agent phân tích siêu chuẩn&lt;
       </p>
 
-      <div
-        className="login-page__modal"
-        style={{ backgroundImage: `url(${getAssetUrl("/assets/frame-login.png")})` }}
-        role="dialog"
-        aria-label={authView === "login" ? "Đăng nhập" : "Đăng ký"}
-      >
-        <div className="login-page__modal-inner">
+      <div className="login-page__auth-stack">
+        <div className="login-page__robot-float" aria-hidden>
+          <img className="login-page__robot-float-img" src={getAssetUrl("/assets/robot.gif")} alt="" />
+        </div>
+
+        <div
+          className="login-page__modal"
+          style={{ backgroundImage: `url(${getAssetUrl("/assets/frame-login.png")})` }}
+          role="dialog"
+          aria-label={authView === "login" ? "Đăng nhập" : "Đăng ký"}
+        >
+          <div className="login-page__modal-inner">
           <div className="login-page__robot-col">
             <img
               className="login-page__robot"
@@ -494,6 +501,7 @@ const Login: React.FC = () => {
                 </span>
               </p>
             )}
+          </div>
           </div>
         </div>
       </div>
