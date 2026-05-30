@@ -36,9 +36,8 @@ const ModalUser: React.FC<IProps> = ({
   useEffect(() => {
     if (isShowEdit && data) {
       form.setFieldsValue({
-        name: data?.username, // giả sử `name` dùng `username` hiện tại
+        name: data?.username,
         username: data?.username,
-        phone: data?.phone,
       });
     } else {
       form.resetFields();
@@ -127,7 +126,6 @@ const ModalUser: React.FC<IProps> = ({
               username: value.username,
               password: value.password,
               phone: value.phone,
-              managedByUsername: userInfo.userName,
             },
             {
               headers: {
@@ -192,8 +190,7 @@ const ModalUser: React.FC<IProps> = ({
           `${process.env.REACT_APP_URL_API}/users/${data?._id}`,
           {
             username: value.username,
-            phone: value.phone,
-            password: value.password,
+            ...(value.password ? { password: value.password } : {}),
           },
           {
             headers: {
@@ -279,16 +276,18 @@ const ModalUser: React.FC<IProps> = ({
         >
           <Input size="large" placeholder="vd: player01" autoComplete="username" />
         </Form.Item>
-        <Form.Item
-          label="Số điện thoại"
-          name="phone"
-          rules={[
-            { required: true, message: "Vui lòng nhập số điện thoại" },
-            { pattern: /^[0-9]{10}$/, message: "Số điện thoại gồm 10 chữ số" },
-          ]}
-        >
-          <Input size="large" maxLength={10} placeholder="09xxxxxxxx" inputMode="numeric" />
-        </Form.Item>
+        {isShowCreate ? (
+          <Form.Item
+            label="Số điện thoại"
+            name="phone"
+            rules={[
+              { required: true, message: "Vui lòng nhập số điện thoại" },
+              { pattern: /^[0-9]{10}$/, message: "Số điện thoại gồm 10 chữ số" },
+            ]}
+          >
+            <Input size="large" maxLength={10} placeholder="09xxxxxxxx" inputMode="numeric" />
+          </Form.Item>
+        ) : null}
         <Form.Item
           label="Mật khẩu"
           name="password"

@@ -92,12 +92,6 @@ const ListUser: React.FC = () => {
       ),
     },
     {
-      title: "Số điện thoại",
-      dataIndex: "phone",
-      align: "center",
-      render: (value: string) => value || "—",
-    },
-    {
       title: "Xu",
       dataIndex: "coins",
       align: "center",

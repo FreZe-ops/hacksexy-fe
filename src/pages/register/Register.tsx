@@ -46,7 +46,6 @@ const Register: React.FC<IProps> = ({
         await axios
           .post(`${process.env.REACT_APP_URL_API}/auth/register`, {
             username: data.username,
-            managedByUsername: "superadmin",
             phone: data.phone_number,
             password: String(data.password),
           })

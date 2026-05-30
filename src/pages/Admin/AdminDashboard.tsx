@@ -124,7 +124,7 @@ const AdminDashboard = () => {
             <code>X-Frame-Options</code>).
           </li>
           <li>
-            Superadmin có thể xem toàn bộ user; Admin chỉ quản lý user thuộc quyền của mình.
+            Mọi Admin xem và quản lý chung tất cả tài khoản User; Superadmin xem thêm cả Admin.
           </li>
         </ul>
       </section>

@@ -262,12 +262,9 @@ const Login: React.FC = () => {
 
   const onRegister = async (data: RegisterFormValues) => {
     try {
-      const managedByUsername =
-        referralCode.trim() !== "" ? referralCode.trim() : "superadmin";
       await axios
         .post(`${process.env.REACT_APP_URL_API}/auth/register`, {
           username: data.username,
-          managedByUsername,
           phone: data.phone_number,
           password: String(data.password),
         })
