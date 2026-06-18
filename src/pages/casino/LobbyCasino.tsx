@@ -9,7 +9,6 @@ import ResultTable from "../../components/ResultTable";
 import LobbyConfirmTableModal from "../../components/LobbyConfirmTableModal";
 import BackButton from "../../components/BackButton";
 import "./LobbyCasino.css";
-import { getRoundStatsForTable } from "../../utils/baccaratBigRoad";
 
 /**
  * Giống LobbyRoom (selectedKey = 1): ưu tiên ai0, không có thì groupRoad.
@@ -155,7 +154,11 @@ export default function BaccaratRoomList() {
   };
 
   const RoomCard = ({ value }: any) => {
-    const ptb = getRoundStatsForTable(value);
+    const ptb = {
+      player: Number(value?.roundStats?.player ?? 0),
+      tie: Number(value?.roundStats?.tie ?? 0),
+      banker: Number(value?.roundStats?.banker ?? 0),
+    };
     const ptbDisplay = getLobbyPtbDisplay(value, ptb);
     const winNum = getLobbyWinPercentNumber(value);
     const winPct = getLobbyWinPercent(value) ?? "—";

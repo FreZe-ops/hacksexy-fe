@@ -9,11 +9,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { getAssetUrl } from "../../utils/assetUrl";
-import {
-  detectRoundOutcome,
-  getRoundStatsForTable,
-  roundOutcomeToVN,
-} from "../../utils/baccaratBigRoad";
 import "../../pages/login/css/main.login.css";
 import "./LobbyRoom.css";
 const Cookies = require("js-cookie");
@@ -23,6 +18,14 @@ function roadToLabel(road: number | undefined): string {
   if ([8, 9, 10].includes(road)) return "PLAYER";
   if ([0, 1, 2].includes(road)) return "BANKER";
   return "TIE";
+}
+
+/** PLAYER / BANKER / HÒA — dùng cho bảng lịch sử */
+function roadToResultVN(road: number | undefined): "PLAYER" | "BANKER" | "HÒA" {
+  if (road == null) return "HÒA";
+  if ([8, 9, 10].includes(road)) return "PLAYER";
+  if ([0, 1, 2].includes(road)) return "BANKER";
+  return "HÒA";
 }
 
 function getSessionDisplayId(item: any, index: number): string {
@@ -842,7 +845,7 @@ const LobbyRoom: React.FC = () => {
     );
     const last = sorted.slice(-24).reverse();
     return last.map((item: any, index: number) => {
-      const ketQua = roundOutcomeToVN(detectRoundOutcome(item) ?? "T");
+      const ketQua = roadToResultVN(item?.road);
       const rk = getRoundStorageKey(item);
       const duDoan =
         rk && roundPredictionByKey.has(rk)
@@ -860,9 +863,14 @@ const LobbyRoom: React.FC = () => {
     });
   }, [dataRoom?.totalRound, roundPredictionByKey]);
 
+  /** Tổng P/Hòa/B — scratch-data trả roundStats, FE chỉ hiển thị */
   const ptbCounts = useMemo(
-    () => getRoundStatsForTable(dataRoom),
-    [dataRoom?.roundStats, dataRoom?.totalRound]
+    () => ({
+      player: Number(dataRoom?.roundStats?.player ?? 0),
+      tie: Number(dataRoom?.roundStats?.tie ?? 0),
+      banker: Number(dataRoom?.roundStats?.banker ?? 0),
+    }),
+    [dataRoom?.roundStats]
   );
 
   return (
