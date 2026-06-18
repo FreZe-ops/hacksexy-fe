@@ -9,23 +9,7 @@ import ResultTable from "../../components/ResultTable";
 import LobbyConfirmTableModal from "../../components/LobbyConfirmTableModal";
 import BackButton from "../../components/BackButton";
 import "./LobbyCasino.css";
-
-/** Đếm P / Hòa / B từ totalRound (cùng logic symbol với ResultTable) */
-function countPlayerTieBanker(totalRound?: any[]) {
-  if (!Array.isArray(totalRound) || totalRound.length === 0) {
-    return { player: 0, tie: 0, banker: 0 };
-  }
-  let player = 0;
-  let tie = 0;
-  let banker = 0;
-  for (const item of totalRound) {
-    const r = item.road;
-    if ([8, 9, 10].includes(r)) player += 1;
-    else if ([0, 1, 2].includes(r)) banker += 1;
-    else tie += 1;
-  }
-  return { player, tie, banker };
-}
+import { getRoundStatsForTable } from "../../utils/baccaratBigRoad";
 
 /**
  * Giống LobbyRoom (selectedKey = 1): ưu tiên ai0, không có thì groupRoad.
@@ -171,7 +155,7 @@ export default function BaccaratRoomList() {
   };
 
   const RoomCard = ({ value }: any) => {
-    const ptb = countPlayerTieBanker(value.totalRound);
+    const ptb = getRoundStatsForTable(value);
     const ptbDisplay = getLobbyPtbDisplay(value, ptb);
     const winNum = getLobbyWinPercentNumber(value);
     const winPct = getLobbyWinPercent(value) ?? "—";
