@@ -649,7 +649,7 @@ const TableGameNew = () => {
   };
 
   const startRefreshCountdown = () => {
-    const refreshSec = randomInt(100, 150) * 60 + randomInt(0, 59);
+    const refreshSec = 5 * 60; // 5 phút đếm ngược
     setRefreshRemainingSec(refreshSec);
     setRefreshEndsAtMs(Date.now() + refreshSec * 1000);
     setShowHackResults(true);

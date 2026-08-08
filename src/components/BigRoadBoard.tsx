@@ -193,7 +193,9 @@ function formatBaccaratResults(results: any[]) {
 
 const BigRoadBoard: React.FC<BigRoadBoardProps> = ({ tableData }) => {
   const computed = useMemo(() => {
-    const rows = Array.isArray(tableData) ? tableData : [];
+    const rows = Array.isArray(tableData)
+      ? [...tableData].sort((a, b) => (a.stampTime ?? 0) - (b.stampTime ?? 0))
+      : [];
     return formatBaccaratResults(rows);
   }, [tableData]);
 

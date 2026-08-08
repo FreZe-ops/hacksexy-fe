@@ -17,19 +17,30 @@ function buildMatrix(tableData: any[]) {
     Array.from({ length: MATRIX_ROWS }, () => null)
   );
 
-  const sorted = [...tableData].sort((a, b) => a.stampTime - b.stampTime);
-  const isOverflow = sorted.some((item) => item.showX >= MATRIX_COLS);
-  const displayItems = isOverflow
-    ? sorted.map((item, index) => ({
-        ...item,
-        showX: Math.floor(index / MATRIX_ROWS),
-        showY: index % MATRIX_ROWS,
-      }))
-    : sorted;
+  const sorted = [...tableData].sort(
+    (a, b) => (a.stampTime ?? 0) - (b.stampTime ?? 0)
+  );
 
-  /** Chỉ lấy tối đa 72 ván mới nhất (giống chỗ hiển thị trên bàn) */
-  const capped = displayItems.slice(-MATRIX_MAX);
+  const withCoords = sorted.filter(
+    (item) => typeof item.showX === "number" && typeof item.showY === "number"
+  );
 
+  if (withCoords.length > 0) {
+    const maxX = Math.max(...withCoords.map((item) => item.showX));
+    const colOffset = Math.max(0, maxX - MATRIX_COLS + 1);
+
+    for (const item of withCoords) {
+      const col = item.showX - colOffset;
+      const row = item.showY;
+      if (col >= 0 && col < MATRIX_COLS && row >= 0 && row < MATRIX_ROWS && matrix[col]) {
+        matrix[col][row] = item.road;
+      }
+    }
+    return matrix;
+  }
+
+  /** Fallback khi API thiếu showX/showY: điền tuần tự theo thời gian */
+  const capped = sorted.slice(-MATRIX_MAX);
   capped.forEach((item: any, index: number) => {
     const col = Math.floor(index / MATRIX_ROWS);
     const row = index % MATRIX_ROWS;
