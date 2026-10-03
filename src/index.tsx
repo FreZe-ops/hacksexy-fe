@@ -4,6 +4,7 @@ import "./styles/mobile-global.css";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import { captureRefCode } from "./utilities/refCode";
 
 declare global {
   interface Window {
@@ -12,6 +13,7 @@ declare global {
 }
 if (typeof window !== "undefined") {
   window.__ASSET_V__ = Date.now();
+  captureRefCode();
 }
 
 const root = ReactDOM.createRoot(

@@ -20,6 +20,8 @@ export interface DataType {
   phone: string;
   role: string;
   coins: number;
+  refCode?: string;
+  ownerAdminId?: { _id: string; username: string } | null;
 }
 
 function roleTagClass(role: string) {
@@ -92,6 +94,23 @@ const ListUser: React.FC = () => {
       ),
     },
     {
+      title: "Admin quản lý / Mã giới thiệu",
+      align: "center",
+      render: (data: DataType) => {
+        if (data.role === "ADMIN") {
+          return data.refCode ? <code>ref={data.refCode}</code> : "—";
+        }
+        if (data.role === "USER") {
+          return data.ownerAdminId?.username ? (
+            <strong>{data.ownerAdminId.username}</strong>
+          ) : (
+            <span style={{ color: "#94a3b8" }}>Chưa gán</span>
+          );
+        }
+        return "—";
+      },
+    },
+    {
       title: "Xu",
       dataIndex: "coins",
       align: "center",
@@ -161,6 +180,11 @@ const ListUser: React.FC = () => {
     fetchData();
   }, [token, refreshTrigger]);
 
+  const admins = useMemo(
+    () => dataUser.filter((user) => user.role === "ADMIN"),
+    [dataUser]
+  );
+
   const filteredUsers = useMemo(() => {
     return dataUser.filter((user) =>
       user.username.toLowerCase().includes(searchTerm.toLowerCase())
@@ -207,6 +231,7 @@ const ListUser: React.FC = () => {
         onCancel={() => setIsShowCreate(false)}
         onRefesh={() => setRefreshTrigger((pev) => pev + 1)}
         data={dataEdit}
+        admins={admins}
       />
       <ModalAppCoin
         id={idUser}

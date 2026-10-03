@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Modal, Form, Input, Button, Radio } from "antd";
+import { Modal, Form, Input, Button, Radio, Select } from "antd";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { DataType } from "./ListUser";
@@ -11,6 +11,7 @@ interface IProps {
   isShowEdit: boolean;
   onCanEdit: () => void;
   data?: DataType;
+  admins: DataType[];
 }
 
 interface IForm {
@@ -19,6 +20,7 @@ interface IForm {
   password: string;
   re_password: string;
   role: string;
+  ownerAdminId?: string;
 }
 
 const ModalUser: React.FC<IProps> = ({
@@ -28,16 +30,19 @@ const ModalUser: React.FC<IProps> = ({
   onCanEdit,
   isShowEdit,
   data,
+  admins,
 }) => {
   const Cookie = require("js-cookie");
   const token = Cookie.get("access_token");
   const [form] = Form.useForm();
+  const watchedRole = Form.useWatch("role", form);
 
   useEffect(() => {
     if (isShowEdit && data) {
       form.setFieldsValue({
         name: data?.username,
         username: data?.username,
+        ownerAdminId: data?.ownerAdminId?._id ?? "",
       });
     } else {
       form.resetFields();
@@ -46,6 +51,10 @@ const ModalUser: React.FC<IProps> = ({
 
   const userInfoRaw = localStorage.getItem("user_info");
   const userInfo = userInfoRaw ? JSON.parse(userInfoRaw) : null;
+  const isSuperAdmin = userInfo?.role === "SUPERADMIN";
+  const showOwnerSelect =
+    isSuperAdmin &&
+    ((isShowCreate && watchedRole !== "r_admin") || (isShowEdit && data?.role === "USER"));
 
   const handleCreateForSuperAdmin = async (value: IForm) => {
     if (value.password === value.re_password) {
@@ -60,6 +69,9 @@ const ModalUser: React.FC<IProps> = ({
               role: value.role === "r_admin"
                   ? "ADMIN"
                   : "USER",
+              ...(value.role !== "r_admin" && value.ownerAdminId
+                ? { ownerAdminId: value.ownerAdminId }
+                : {}),
             },
             {
               headers: {
@@ -121,7 +133,7 @@ const ModalUser: React.FC<IProps> = ({
       try {
         const createUser = await axios
           .post(
-            `${process.env.REACT_APP_URL_API}/auth/register`,
+            `${process.env.REACT_APP_URL_API}/users`,
             {
               username: value.username,
               password: value.password,
@@ -191,6 +203,7 @@ const ModalUser: React.FC<IProps> = ({
           {
             username: value.username,
             ...(value.password ? { password: value.password } : {}),
+            ...(showOwnerSelect ? { ownerAdminId: value.ownerAdminId ?? "" } : {}),
           },
           {
             headers: {
@@ -319,6 +332,18 @@ const ModalUser: React.FC<IProps> = ({
               <Radio.Button value="r_admin">Admin</Radio.Button>
               <Radio.Button value="r_user">User</Radio.Button>
             </Radio.Group>
+          </Form.Item>
+        ) : null}
+
+        {showOwnerSelect ? (
+          <Form.Item label="Admin quản lý" name="ownerAdminId" initialValue="">
+            <Select
+              size="large"
+              options={[
+                { value: "", label: "Chưa gán (dùng link chung)" },
+                ...admins.map((a) => ({ value: a._id, label: a.username })),
+              ]}
+            />
           </Form.Item>
         ) : null}
 

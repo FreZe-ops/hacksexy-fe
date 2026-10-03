@@ -8,6 +8,7 @@ import "./HomeNH.css";
 import axios from "axios";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
+import { getRefCode } from "../../utilities/refCode";
 
 const TableGameNew = () => {
   const navigate = useNavigate();
@@ -110,8 +111,13 @@ const TableGameNew = () => {
     let cancelled = false;
     setIsScreenLoading(true);
 
+    const token = Cookies.get("access_token");
+    const ref = getRefCode();
     axios
-      .get(`${process.env.REACT_APP_URL_API}/game-screen-links/resolve/${tableRoomParam}`)
+      .get(`${process.env.REACT_APP_URL_API}/game-screen-links/resolve/${tableRoomParam}`, {
+        params: ref ? { ref } : undefined,
+        headers: token ? { Authorization: `Bearer ${token}` } : undefined,
+      })
       .then((res) => {
         if (cancelled) return;
         setGameScreenUrl(String(res.data?.screenUrl ?? ""));

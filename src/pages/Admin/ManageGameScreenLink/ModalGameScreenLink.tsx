@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import { Button, Form, Input, Modal, Switch } from "antd";
+import { Button, Form, Input, Modal, Select, Switch } from "antd";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { GameScreenLinkRow } from "./ListGameScreenLinks";
+import { GameScreenLinkRow, LinkOwner, OWNER_GLOBAL } from "./ListGameScreenLinks";
 
 interface IProps {
   isShowCreate: boolean;
@@ -11,9 +11,13 @@ interface IProps {
   isShowEdit: boolean;
   onCanEdit: () => void;
   data?: GameScreenLinkRow;
+  isSuperAdmin: boolean;
+  admins: LinkOwner[];
+  defaultOwnerId: string;
 }
 
 interface IForm {
+  ownerId: string;
   gameId: string;
   gameName: string;
   screenUrl: string;
@@ -27,6 +31,9 @@ const ModalGameScreenLink: React.FC<IProps> = ({
   onCanEdit,
   isShowEdit,
   data,
+  isSuperAdmin,
+  admins,
+  defaultOwnerId,
 }) => {
   const Cookie = require("js-cookie");
   const token = Cookie.get("access_token");
@@ -35,6 +42,7 @@ const ModalGameScreenLink: React.FC<IProps> = ({
   useEffect(() => {
     if (isShowEdit && data) {
       form.setFieldsValue({
+        ownerId: data.ownerId?._id ?? OWNER_GLOBAL,
         gameId: data.gameId,
         gameName: data.gameName,
         screenUrl: data.screenUrl,
@@ -42,9 +50,9 @@ const ModalGameScreenLink: React.FC<IProps> = ({
       });
     } else {
       form.resetFields();
-      form.setFieldsValue({ isDefault: false });
+      form.setFieldsValue({ isDefault: false, ownerId: defaultOwnerId });
     }
-  }, [isShowEdit, data, form]);
+  }, [isShowEdit, data, form, defaultOwnerId]);
 
   const handleSubmit = async (values: IForm) => {
     const payload = {
@@ -52,6 +60,7 @@ const ModalGameScreenLink: React.FC<IProps> = ({
       gameName: values.gameName?.trim() ?? "",
       screenUrl: values.screenUrl.trim(),
       isDefault: Boolean(values.isDefault),
+      ...(isSuperAdmin ? { ownerId: values.ownerId ?? OWNER_GLOBAL } : {}),
     };
 
     try {
@@ -109,6 +118,16 @@ const ModalGameScreenLink: React.FC<IProps> = ({
       wrapClassName="admin-modal"
     >
       <Form form={form} layout="vertical" onFinish={handleSubmit}>
+        {isSuperAdmin ? (
+          <Form.Item label="Thuộc admin" name="ownerId">
+            <Select
+              options={[
+                { value: OWNER_GLOBAL, label: "Link chung (áp dụng khi admin chưa cấu hình)" },
+                ...admins.map((a) => ({ value: a._id, label: a.username })),
+              ]}
+            />
+          </Form.Item>
+        ) : null}
         <Form.Item
           label="Game ID"
           name="gameId"

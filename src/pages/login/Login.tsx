@@ -8,6 +8,7 @@ import "./css/main.login.css";
 import "./css/login-page.css";
 import { getAssetUrl } from "../../utils/assetUrl";
 import HackerLiveFeed from "../../components/HackerLiveFeed";
+import { getRefCode } from "../../utilities/refCode";
 
 const registerSchema = yup.object().shape({
   username: yup.string().required("Tên tài khoản bắt buộc"),
@@ -267,6 +268,7 @@ const Login: React.FC = () => {
           username: data.username,
           phone: data.phone_number,
           password: String(data.password),
+          ...(getRefCode() ? { ref: getRefCode() } : {}),
         })
         .then((res) => {
           if (res.status === 201) {
