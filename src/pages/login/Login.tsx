@@ -8,7 +8,7 @@ import "./css/main.login.css";
 import "./css/login-page.css";
 import { getAssetUrl } from "../../utils/assetUrl";
 import HackerLiveFeed from "../../components/HackerLiveFeed";
-import { getRefCode } from "../../utilities/refCode";
+import { getRefCode, normalizeRefCode } from "../../utilities/refCode";
 
 const registerSchema = yup.object().shape({
   username: yup.string().required("Tên tài khoản bắt buộc"),
@@ -262,13 +262,14 @@ const Login: React.FC = () => {
   };
 
   const onRegister = async (data: RegisterFormValues) => {
+    const ref = normalizeRefCode(referralCode) || getRefCode();
     try {
       await axios
         .post(`${process.env.REACT_APP_URL_API}/auth/register`, {
           username: data.username,
           phone: data.phone_number,
           password: String(data.password),
-          ...(getRefCode() ? { ref: getRefCode() } : {}),
+          ...(ref ? { ref } : {}),
         })
         .then((res) => {
           if (res.status === 201) {
@@ -305,7 +306,7 @@ const Login: React.FC = () => {
 
   const goRegister = () => {
     setAuthView("register");
-    setReferralCode("");
+    setReferralCode(getRefCode());
     resetRegisterForm();
   };
 
